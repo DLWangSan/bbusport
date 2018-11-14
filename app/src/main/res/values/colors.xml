@@ -3,4 +3,15 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    <color name="write">#fff</color>
+    <color name="red">#f00</color>
+
+    <color name="blue_light">#0099ff</color>
+
+    <color name="sport_bg">#64b971</color>
+    <color name="sport_button_normal">#6fba58</color>
+    <color name="sport_button_press">#28b046</color>
+
+    <color name="recycler_default_bg">#f8f8fa</color>
+
 </resources>

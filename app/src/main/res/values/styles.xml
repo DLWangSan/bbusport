@@ -24,4 +24,8 @@
         <item name="android:gravity">center_horizontal</item>
     </style>
 
+    <style name="base_tab_sport_text" parent="base_text">
+        <item name="android:textColor">@color/write</item>
+    </style>
+
 </resources>

@@ -9,7 +9,7 @@ import android.widget.LinearLayout;
 
 import com.dlws.bbusport.R;
 /**
- * 主页顶部的View
+ * 主页底部的View
  * Created by liuheng on 16/7/12.
  */
 public class MainBottomView extends LinearLayout {

@@ -36,19 +36,19 @@ public class MapActivity extends AppCompatActivity {
         setContentView(R.layout.activity_map);
 
         mapView=(MapView)findViewById(R.id.amapView);
-        runButton=(Button)findViewById(R.id.run);
+//        runButton=(Button)findViewById(R.id.run);
 
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();
         aMap.setMyLocationEnabled(true);
 
-        //记录轨迹
-        runButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                LBSTraceClient lbsTraceClient = LBSTraceClient.getInstance(getBaseContext());
-            }
-        });
+//        //记录轨迹
+//        runButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                LBSTraceClient lbsTraceClient = LBSTraceClient.getInstance(getBaseContext());
+//            }
+//        });
 
 
         List<String> permissionList = new ArrayList<>();
