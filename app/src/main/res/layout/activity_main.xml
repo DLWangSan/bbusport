@@ -1,16 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout  xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-   <Button
-       android:id="@+id/map"
-       android:layout_width="wrap_content"
-       android:layout_height="wrap_content"
-       android:text="地图"/>
-    <Button
-        android:id="@+id/first_page"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:gravity="center_vertical"
+    android:background="@drawable/back_main">
+   <!--<Button-->
+       <!--android:id="@+id/map"-->
+       <!--android:layout_width="wrap_content"-->
+       <!--android:layout_height="wrap_content"-->
+       <!--android:text="地图"/>-->
+    <!--<Button-->
+        <!--android:id="@+id/first_page"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="首页"/>-->
+    <TextView
+        android:id="@+id/login"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="首页"/>
-</LinearLayout>
+        android:text="登录界面（测试版）"
+        android:textSize="30dp"
+        android:textStyle="bold"
+        android:layout_centerInParent="true"/>
+    <TextView
+        android:layout_below="@+id/login"
+        android:id="@+id/login1"
+        android:layout_width="50dp"
+        android:layout_height="50dp" />
+<TextView
+    android:id="@+id/id_bac"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="学号："
+    android:layout_below="@+id/login1"
+    android:textSize="20dp"
+    android:layout_marginLeft="50dp"/>
+
+    <EditText
+        android:id="@+id/id"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/login1"
+        android:layout_marginLeft="52dp"
+        android:layout_marginTop="-14dp"
+        android:layout_toRightOf="@+id/id_bac"
+        android:textSize="20dp" />
+
+    <TextView
+        android:id="@+id/pwd_bak"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20dp"
+        android:layout_below="@+id/id_bac"
+        android:text="密码："
+        android:layout_marginLeft="50dp"/>
+
+    <EditText
+        android:id="@+id/pwd"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/id_bac"
+        android:layout_marginLeft="50dp"
+        android:layout_marginTop="-21dp"
+        android:layout_toRightOf="@+id/pwd_bak"
+        android:textSize="20dp"
+        android:inputType="textPassword"/>
+
+    <Button
+        android:id="@+id/ok"
+        android:layout_below="@+id/pwd_bak"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:text="登录"/>
+
+
+
+
+</RelativeLayout >
