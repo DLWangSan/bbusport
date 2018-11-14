@@ -7,6 +7,8 @@ import android.view.View;
 import android.widget.Button;
 import com.dlws.bbusport.activity.first_page.FirstPageActivity;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 
 public class MainActivity extends AppCompatActivity {
     private Button mapButton;
@@ -15,6 +17,9 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+
         mapButton=findViewById(R.id.map);
         firstPageButton=findViewById(R.id.first_page);
 

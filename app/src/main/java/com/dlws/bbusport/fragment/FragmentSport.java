@@ -16,7 +16,7 @@ import com.dlws.bbusport.activity.map_page.MapActivity;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class FragmentSport extends Fragment implements View.OnClickListener{
+public class FragmentSport extends android.support.v4.app.Fragment implements View.OnClickListener{
 
     private Button mSportStartButton;
 

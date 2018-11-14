@@ -21,6 +21,8 @@ import com.amap.api.maps.MapView;
 import com.amap.api.maps.model.MyLocationStyle;
 import com.amap.api.trace.LBSTraceClient;
 
+import org.zackratos.ultimatebar.UltimateBar;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,9 +36,13 @@ public class MapActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_map);
+        //状态栏透明
+        UltimateBar ultimateBar = new UltimateBar(this);
+        ultimateBar.setImmersionBar();
+
 
         mapView=(MapView)findViewById(R.id.amapView);
-//        runButton=(Button)findViewById(R.id.run);
+
 
         mapView.onCreate(savedInstanceState);
         aMap = mapView.getMap();
