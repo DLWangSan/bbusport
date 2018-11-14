@@ -13,13 +13,13 @@
             android:layout_width="@dimen/activity_main_bottom_image_height"
             android:layout_height="@dimen/activity_main_bottom_image_height"
             android:layout_marginTop="5dp"
-            android:background="@drawable/ic_launcher_background"
+            android:background="@mipmap/tab_information_unselected"
             />
 
         <TextView
             style="@style/base_small_text"
             android:layout_marginTop="5dp"
-            android:text="首页" />
+            android:text="@string/first_page" />
     </LinearLayout>
 
     <LinearLayout
@@ -36,7 +36,7 @@
         <TextView
             style="@style/base_small_text"
             android:layout_marginTop="5dp"
-            android:text="运动" />
+            android:text="@string/sport" />
 
     </LinearLayout>
 
@@ -54,7 +54,7 @@
         <TextView
             style="@style/base_small_text"
             android:layout_marginTop="5dp"
-            android:text="资讯" />
+            android:text="@string/mine" />
 
     </LinearLayout>
 

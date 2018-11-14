@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">BBUSport</string>
+    <string name="app_name">BBU运动</string>
+    <string name="first_page">首页</string>
+    <string name="sport">运动</string>
+    <string name="mine">我的</string>
+
+
+
 </resources>
