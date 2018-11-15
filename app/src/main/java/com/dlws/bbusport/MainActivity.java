@@ -1,10 +1,17 @@
 package com.dlws.bbusport;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.MotionEvent;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -25,12 +32,17 @@ public class MainActivity extends AppCompatActivity {
     private Button loginButton;
     private EditText idEditText;
     private EditText pwdEditText;
+    private CheckBox remPwdCheckBox;
 
     private String id;
     private String pwd;
     static Boolean flag;    //判断账号密码匹配
     static Users usersNow;      //当前用户
 
+    private boolean isHideFirst = true;
+
+
+    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -42,13 +54,76 @@ public class MainActivity extends AppCompatActivity {
         loginButton = findViewById(R.id.ok);
         idEditText=findViewById(R.id.id);
         pwdEditText=findViewById(R.id.pwd);
+        remPwdCheckBox=findViewById(R.id.remembPwd);
+
+        id=idEditText.getText().toString();
+        pwd=pwdEditText.getText().toString();
+        remPwdCheckBox.setChecked(true);
+
+        /*加载本地保存的账号密码*/
+        SharedPreferences sPreferences=getSharedPreferences("users", MODE_PRIVATE);
+        String idSaved=sPreferences.getString("id","");
+        String pwdSaved = sPreferences.getString("pwd","");
+        idEditText.setText(idSaved);
+        pwdEditText.setText(pwdSaved);
+
+
+
+        /*记住密码小眼睛，余童提供代码，已完成*/
+        final Drawable[] drawables = pwdEditText.getCompoundDrawables();
+        final int eyeWidth = drawables[2].getBounds().width();
+        final Drawable drawableEyeOpen = getResources().getDrawable(R.drawable.zhengyan);
+        drawableEyeOpen.setBounds(drawables[2].getBounds());
+        pwdEditText.setOnTouchListener(new View.OnTouchListener() {
+                                           @Override
+                                           public boolean onTouch(View v, MotionEvent event) {
+                                               if (event.getAction() == MotionEvent.ACTION_UP) {
+                                                   float et_pwdMinX = v.getWidth() - eyeWidth - pwdEditText.getPaddingRight();
+                                                   float et_pwdMaxX = v.getWidth();
+                                                   float et_pwdMinY = 0;
+                                                   float et_pwdMaxY = v.getHeight();
+                                                   float x = event.getX();
+                                                   float y = event.getY();
+                                                   if (x < et_pwdMaxX && x > et_pwdMinX && y > et_pwdMinY && y < et_pwdMaxY) {
+                                                       isHideFirst = !isHideFirst;
+                                                       if (isHideFirst) {
+                                                           pwdEditText.setCompoundDrawables(null,
+                                                                   null,
+                                                                   drawables[2], null);
+
+                                                           pwdEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                                                       } else {
+                                                           pwdEditText.setCompoundDrawables(null, null, drawableEyeOpen, null);
+                                                           pwdEditText.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                                                       }
+                                                   }
+                                               }
+                                               return false;
+                                           }
+
+                                       }
+        );
+
+
 
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+
                 id=idEditText.getText().toString();
                 pwd=pwdEditText.getText().toString();
-//                Toast.makeText(MainActivity.this, "正在登录...", Toast.LENGTH_SHORT).show();
+
+                /*判断记住密码是否被勾选*/
+                if(remPwdCheckBox.isChecked())
+                {
+                    remberPwd(id,pwd);
+                }else{
+                    deletePwd();
+                }
+
+
+//               通过验证则跳转
                 if(checkUsers()){
                     Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
                     startActivity(intent);
@@ -61,6 +136,25 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    /*勾选记住密码跳转的方法
+    * 实际操作为通过SharedPreferences
+    * 将账号密码保存到user文件中
+    * 已完成*/
+    private void remberPwd(String id1, String pwd1){
+        SharedPreferences.Editor editor = getSharedPreferences("users", MODE_PRIVATE).edit();
+        editor.putString("id", id1);
+        editor.putString("pwd", pwd1);
+        editor.apply();
+    }
+    /*不勾选记住密码跳转的方法
+     * 实际操作为通过SharedPreferences
+     * 将user文件中信息清空
+     * 已完成*/
+    private void deletePwd(){
+        SharedPreferences.Editor editor = getSharedPreferences("users", MODE_PRIVATE).edit();
+        editor.clear();
+        editor.apply();
+    }
     /*待完善*/
     protected boolean checkUsers(){
         test();
@@ -68,7 +162,7 @@ public class MainActivity extends AppCompatActivity {
         * 处理逻辑应该是判断子线程是否完成操作。若果没有，加载动画，如果已经
         * 完成，则继续进行。这部分有时间继续完善！*/
         try{
-            Thread.sleep(300);}catch (Exception e){e.printStackTrace();
+            Thread.sleep(1000);}catch (Exception e){e.printStackTrace();
         }
         if(flag){
             return true;
