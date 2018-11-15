@@ -124,12 +124,16 @@ public class MainActivity extends AppCompatActivity {
 
 
 //               通过验证则跳转
-                if(checkUsers()){
-                    Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
-                    startActivity(intent);
-                    Toast.makeText(MainActivity.this, usersNow.getName()+",欢迎！", Toast.LENGTH_SHORT).show();
-                }else{
-                    Toast.makeText(MainActivity.this, "登录失败！", Toast.LENGTH_SHORT).show();
+                try {
+                    if(checkUsers()){
+                        Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(MainActivity.this, usersNow.getName()+",欢迎！", Toast.LENGTH_SHORT).show();
+                    }else{
+                        Toast.makeText(MainActivity.this, "登录失败！", Toast.LENGTH_SHORT).show();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
                 }
             }
         });
@@ -156,25 +160,10 @@ public class MainActivity extends AppCompatActivity {
         editor.apply();
     }
     /*待完善*/
-    protected boolean checkUsers(){
-        test();
-        /*下面的延迟函数是为了给子线程留下充足的时间，只是临时对策。正确的
-        * 处理逻辑应该是判断子线程是否完成操作。若果没有，加载动画，如果已经
-        * 完成，则继续进行。这部分有时间继续完善！*/
-        try{
-            Thread.sleep(1000);}catch (Exception e){e.printStackTrace();
-        }
-        if(flag){
-            return true;
-        }else {
-            return false;
-        }
-    }
+    protected boolean checkUsers() throws InterruptedException {
+//        test();
 
-    /*新线程发起网络请求，已完成*/
-    protected void test()
-    {
-        new Thread(new Runnable() {
+        Thread thread=new Thread(){
             @Override
             public void run() {
                 try{
@@ -191,7 +180,52 @@ public class MainActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
             }
-        }).start();
+
+        };
+
+        thread.start();
+        /*下面的延迟函数是为了给子线程留下充足的时间，只是临时对策。正确的
+        * 处理逻辑应该是判断子线程是否完成操作。若果没有，加载动画，如果已经
+        * 完成，则继续进行。这部分有时间继续完善！*/
+//        try{
+//            Thread.sleep(1000);}catch (Exception e){e.printStackTrace();
+//        }
+        thread.join();
+
+
+
+
+        if (flag) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    /*新线程发起网络请求，已完成*/
+    protected void test()
+    {
+
+
+
+//        new Thread(new Runnable() {
+//            @Override
+//            public void run() {
+//                try{
+//                    OkHttpClient client =new OkHttpClient();
+//                    Request request =new Request.Builder()
+//                            .url("http://dlws.show.0552web.com/androidtest/bbusportUsers.json")
+//                            .build();
+//                    Response response = client.newCall(request).execute();
+//                    String responseData = response.body().string();
+//                    parseJSON(responseData);
+//
+//
+//                }catch (Exception e){
+//                    e.printStackTrace();
+//                }
+//            }
+//        }).start();
 
     }
 
