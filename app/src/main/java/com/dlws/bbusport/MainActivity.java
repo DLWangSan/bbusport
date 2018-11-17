@@ -1,18 +1,28 @@
 package com.dlws.bbusport;
 
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
+import android.animation.PropertyValuesHolder;
+import android.animation.ValueAnimator;
 import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.dlws.bbusport.activity.first_page.FirstPageActivity;
@@ -34,6 +44,13 @@ public class MainActivity extends AppCompatActivity {
     private EditText pwdEditText;
     private CheckBox remPwdCheckBox;
 
+
+    private View progress;
+    private View mInputLayout;
+    private float mWidth, mHeight;
+
+
+
     private String id;
     private String pwd;
     static Boolean flag;    //判断账号密码匹配
@@ -51,10 +68,9 @@ public class MainActivity extends AppCompatActivity {
         UltimateBar ultimateBar = new UltimateBar(this);
         ultimateBar.setImmersionBar();
 
-        loginButton = findViewById(R.id.ok);
-        idEditText=findViewById(R.id.id);
-        pwdEditText=findViewById(R.id.pwd);
-        remPwdCheckBox=findViewById(R.id.remembPwd);
+
+        initView();
+
 
         id=idEditText.getText().toString();
         pwd=pwdEditText.getText().toString();
@@ -122,21 +138,155 @@ public class MainActivity extends AppCompatActivity {
                     deletePwd();
                 }
 
+                // 计算出控件的高与宽
+                mWidth = loginButton.getMeasuredWidth();
+                mHeight = loginButton.getMeasuredHeight();
+                // 隐藏输入框
+//                idEditText.setVisibility(View.INVISIBLE);
+//                pwdEditText.setVisibility(View.INVISIBLE);
 
-//               通过验证则跳转
-                try {
-                    if(checkUsers()){
-                        Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
-                        startActivity(intent);
-                        Toast.makeText(MainActivity.this, usersNow.getName()+",欢迎！", Toast.LENGTH_SHORT).show();
-                    }else{
-                        Toast.makeText(MainActivity.this, "登录失败！", Toast.LENGTH_SHORT).show();
+
+                inputAnimator(mInputLayout, mWidth, mHeight);
+
+                new Handler().postDelayed(new Runnable(){
+                    public void run() {
+                        //               通过验证则跳转
+                        try {
+                            if(checkUsers()){
+                                Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
+                                startActivity(intent);
+                                Toast.makeText(MainActivity.this, usersNow.getName()+",欢迎！", Toast.LENGTH_SHORT).show();
+                                recovery();
+                            }else{
+                                Toast.makeText(MainActivity.this, "登录失败！", Toast.LENGTH_SHORT).show();
+                                recovery();
+                            }
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
                     }
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
+                }, 2000);
+
+
+
+
+
             }
         });
+
+    }
+
+    private void initView(){
+        loginButton = findViewById(R.id.ok);
+        idEditText=findViewById(R.id.id);
+        pwdEditText=findViewById(R.id.pwd);
+        remPwdCheckBox=findViewById(R.id.remembPwd);
+        progress = findViewById(R.id.layout_progress);
+        mInputLayout = findViewById(R.id.input_layout);
+
+
+    }
+
+    private void recovery() {
+        progress.setVisibility(View.GONE);
+        mInputLayout.setVisibility(View.VISIBLE);
+        idEditText.setVisibility(View.VISIBLE);
+        pwdEditText.setVisibility(View.VISIBLE);
+
+        ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) mInputLayout.getLayoutParams();
+        params.leftMargin = 0;
+        params.rightMargin = 0;
+        mInputLayout.setLayoutParams(params);
+
+
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout, "scaleX", 0.5f,1f );
+        animator2.setDuration(500);
+        animator2.setInterpolator(new AccelerateDecelerateInterpolator());
+        animator2.start();
+    }
+
+
+    /**
+     * 输入框的动画效果
+     *
+     * @param view
+     *            控件
+     * @param w
+     *            宽
+     * @param h
+     *            高
+     */
+    private void inputAnimator(final View view, float w, float h) {
+
+        AnimatorSet set = new AnimatorSet();
+
+        ValueAnimator animator = ValueAnimator.ofFloat(0, w);
+        animator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+
+            @Override
+            public void onAnimationUpdate(ValueAnimator animation) {
+                float value = (Float) animation.getAnimatedValue();
+                ViewGroup.MarginLayoutParams params = (ViewGroup.MarginLayoutParams) view
+                        .getLayoutParams();
+                params.leftMargin = (int) value;
+                params.rightMargin = (int) value;
+                view.setLayoutParams(params);
+            }
+        });
+
+        ObjectAnimator animator2 = ObjectAnimator.ofFloat(mInputLayout,
+                "scaleX", 1f, 0.5f);
+        set.setDuration(1000);
+        set.setInterpolator(new AccelerateDecelerateInterpolator());
+        set.playTogether(animator, animator2);
+        set.start();
+        set.addListener(new Animator.AnimatorListener() {
+
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                /**
+                 * 动画结束后，先显示加载的动画，然后再隐藏输入框
+                 */
+                progress.setVisibility(View.VISIBLE);
+                progressAnimator(progress);
+                mInputLayout.setVisibility(View.INVISIBLE);
+
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+        });
+
+
+    }
+
+    /**
+     * 出现进度动画
+     *
+     * @param view
+     */
+    private void progressAnimator(final View view) {
+        PropertyValuesHolder animator = PropertyValuesHolder.ofFloat("scaleX",
+                0.5f, 1f);
+        PropertyValuesHolder animator2 = PropertyValuesHolder.ofFloat("scaleY",
+                0.5f, 1f);
+        ObjectAnimator animator3 = ObjectAnimator.ofPropertyValuesHolder(view,
+                animator, animator2);
+        animator3.setDuration(1000);
+        animator3.setInterpolator(new JellyInterpolator());
+        animator3.start();
 
     }
 
@@ -161,6 +311,7 @@ public class MainActivity extends AppCompatActivity {
     }
     /*待完善*/
     protected boolean checkUsers() throws InterruptedException {
+
 //        test();
 
         Thread thread=new Thread(){
@@ -188,12 +339,9 @@ public class MainActivity extends AppCompatActivity {
         * 处理逻辑应该是判断子线程是否完成操作。若果没有，加载动画，如果已经
         * 完成，则继续进行。这部分有时间继续完善！*/
 //        try{
-//            Thread.sleep(1000);}catch (Exception e){e.printStackTrace();
+//            Thread.sleep(3000);}catch (Exception e){e.printStackTrace();
 //        }
         thread.join();
-
-
-
 
         if (flag) {
             return true;
