@@ -14,11 +14,8 @@ import org.zackratos.ultimatebar.UltimateBar;
 public class FirstPageActivity extends AppCompatActivity {
 
     private static final String FRAGMENT_BASE_TAG = "base_fragment";
-
     private MainBottomView mBottomView;
-
-    private int mSelectPosition = 0;
-
+    private int mSelectPosition = 1;
     private MainBottomView.OnBottomChooseListener mBottomChooseListener = new BottomChooseListener();
 
     @Override
@@ -67,6 +64,7 @@ public class FirstPageActivity extends AppCompatActivity {
     }
     //得到每个Fragment对应的tag
     private String getFragmentTagByPosition(int position){
+
         return FRAGMENT_BASE_TAG + position;
     }
 

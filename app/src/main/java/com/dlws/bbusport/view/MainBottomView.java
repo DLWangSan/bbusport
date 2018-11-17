@@ -15,7 +15,7 @@ import com.dlws.bbusport.R;
 public class MainBottomView extends LinearLayout {
 
     //默认选择的位置
-    private static final int DEFAULT_POSITION = 0;
+    private static final int DEFAULT_POSITION = 1;
     private static final int TAB_NUM = 3;
 
     private final int[] UNSELECTED_IMAGE_BG = new int[]{R.mipmap.tab_information_unselected,R.mipmap.tab_sport_unselected,R.mipmap.tab_me_unselected};

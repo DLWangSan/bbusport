@@ -44,48 +44,86 @@ public class MainActivity extends AppCompatActivity {
     private EditText pwdEditText;
     private CheckBox remPwdCheckBox;
 
-
     private View progress;
     private View mInputLayout;
     private float mWidth, mHeight;
 
-
-
     private String id;
     private String pwd;
-    static Boolean flag;    //判断账号密码匹配
+    static int flag;    //判断账号密码匹配
     static Users usersNow;      //当前用户
 
     private boolean isHideFirst = true;
 
 
-    @SuppressLint("ClickableViewAccessibility")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         //状态栏透明
         UltimateBar ultimateBar = new UltimateBar(this);
         ultimateBar.setImmersionBar();
-
-
+        //获取实例初始化
         initView();
+        //加载保存的密码（如果勾选）
+        loadPwd();
+        //密码可见
+        pwdVisible();
+        //登录按钮点击事件
+        loginButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                remembPwd();
+                loadActions();
+                login();
+            }
+        });
+
+    }
 
 
-        id=idEditText.getText().toString();
-        pwd=pwdEditText.getText().toString();
-        remPwdCheckBox.setChecked(true);
+    /*延时让动画加载完毕，暂定2s。
+    * 数据库信息增多之后，可以去掉延时
+    * 直接在完成后进入*/
+    private void login(){
+        new Handler().postDelayed(new Runnable(){
+            public void run() {
+                //               通过验证则跳转
+                try {
+                    if(checkUsers()==1){
+                        Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
+                        startActivity(intent);
+                        Toast.makeText(MainActivity.this, usersNow.getName()+",欢迎！", Toast.LENGTH_SHORT).show();
+                        recovery();
+                    }else if(checkUsers()==-1){
+                        Toast.makeText(MainActivity.this, "账号或密码错误，登录失败！", Toast.LENGTH_SHORT).show();
+                        recovery();
+                    }else{
+                        Toast.makeText(MainActivity.this, "网络连接错误，登录失败！", Toast.LENGTH_SHORT).show();
+                        recovery();
+                    }
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, 2000);
+    }
 
-        /*加载本地保存的账号密码*/
-        SharedPreferences sPreferences=getSharedPreferences("users", MODE_PRIVATE);
-        String idSaved=sPreferences.getString("id","");
-        String pwdSaved = sPreferences.getString("pwd","");
-        idEditText.setText(idSaved);
-        pwdEditText.setText(pwdSaved);
+    /*加载动画*/
+    private void loadActions(){
+        // 计算出控件的高与宽
+        mWidth = loginButton.getMeasuredWidth();
+        mHeight = loginButton.getMeasuredHeight();
+        // 隐藏输入框
+        idEditText.setVisibility(View.INVISIBLE);
+        pwdEditText.setVisibility(View.INVISIBLE);
 
-
-
-        /*记住密码小眼睛，余童提供代码，已完成*/
+        inputAnimator(mInputLayout, mWidth, mHeight);
+    }
+    /*密码小眼睛，余童提供代码，已完成*/
+    @SuppressLint("ClickableViewAccessibility")
+    private void pwdVisible(){
         final Drawable[] drawables = pwdEditText.getCompoundDrawables();
         final int eyeWidth = drawables[2].getBounds().width();
         final Drawable drawableEyeOpen = getResources().getDrawable(R.drawable.zhengyan);
@@ -119,61 +157,32 @@ public class MainActivity extends AppCompatActivity {
 
                                        }
         );
+    }
 
+    private void remembPwd(){
+        id=idEditText.getText().toString();
+        pwd=pwdEditText.getText().toString();
 
+        if(remPwdCheckBox.isChecked())
+        {
+            writePwd(id,pwd);
+        }else{
+            deletePwd();
+        }
+    }
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+    //加载保存的密码
+    private void loadPwd(){
 
+        id=idEditText.getText().toString();
+        pwd=pwdEditText.getText().toString();
+        remPwdCheckBox.setChecked(true);
 
-                id=idEditText.getText().toString();
-                pwd=pwdEditText.getText().toString();
-
-                /*判断记住密码是否被勾选*/
-                if(remPwdCheckBox.isChecked())
-                {
-                    remberPwd(id,pwd);
-                }else{
-                    deletePwd();
-                }
-
-                // 计算出控件的高与宽
-                mWidth = loginButton.getMeasuredWidth();
-                mHeight = loginButton.getMeasuredHeight();
-                // 隐藏输入框
-//                idEditText.setVisibility(View.INVISIBLE);
-//                pwdEditText.setVisibility(View.INVISIBLE);
-
-
-                inputAnimator(mInputLayout, mWidth, mHeight);
-
-                new Handler().postDelayed(new Runnable(){
-                    public void run() {
-                        //               通过验证则跳转
-                        try {
-                            if(checkUsers()){
-                                Intent intent=new Intent(MainActivity.this,FirstPageActivity.class);
-                                startActivity(intent);
-                                Toast.makeText(MainActivity.this, usersNow.getName()+",欢迎！", Toast.LENGTH_SHORT).show();
-                                recovery();
-                            }else{
-                                Toast.makeText(MainActivity.this, "登录失败！", Toast.LENGTH_SHORT).show();
-                                recovery();
-                            }
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }, 2000);
-
-
-
-
-
-            }
-        });
-
+        SharedPreferences sPreferences=getSharedPreferences("users", MODE_PRIVATE);
+        String idSaved=sPreferences.getString("id","");
+        String pwdSaved = sPreferences.getString("pwd","");
+        idEditText.setText(idSaved);
+        pwdEditText.setText(pwdSaved);
     }
 
     private void initView(){
@@ -187,6 +196,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    //恢复动画状态
     private void recovery() {
         progress.setVisibility(View.GONE);
         mInputLayout.setVisibility(View.VISIBLE);
@@ -206,15 +216,11 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    /**
+    /*
      * 输入框的动画效果
-     *
-     * @param view
-     *            控件
-     * @param w
-     *            宽
-     * @param h
-     *            高
+     * @param view  控件
+     * @param w     宽
+     * @param h     高
      */
     private void inputAnimator(final View view, float w, float h) {
 
@@ -272,9 +278,8 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    /**
+    /*
      * 出现进度动画
-     *
      * @param view
      */
     private void progressAnimator(final View view) {
@@ -294,7 +299,7 @@ public class MainActivity extends AppCompatActivity {
     * 实际操作为通过SharedPreferences
     * 将账号密码保存到user文件中
     * 已完成*/
-    private void remberPwd(String id1, String pwd1){
+    private void writePwd(String id1, String pwd1){
         SharedPreferences.Editor editor = getSharedPreferences("users", MODE_PRIVATE).edit();
         editor.putString("id", id1);
         editor.putString("pwd", pwd1);
@@ -309,10 +314,9 @@ public class MainActivity extends AppCompatActivity {
         editor.clear();
         editor.apply();
     }
-    /*待完善*/
-    protected boolean checkUsers() throws InterruptedException {
 
-//        test();
+    /*已完成*/
+    protected int checkUsers() throws InterruptedException {
 
         Thread thread=new Thread(){
             @Override
@@ -325,9 +329,8 @@ public class MainActivity extends AppCompatActivity {
                     Response response = client.newCall(request).execute();
                     String responseData = response.body().string();
                     parseJSON(responseData);
-
-
                 }catch (Exception e){
+                    flag = -2;
                     e.printStackTrace();
                 }
             }
@@ -335,47 +338,11 @@ public class MainActivity extends AppCompatActivity {
         };
 
         thread.start();
-        /*下面的延迟函数是为了给子线程留下充足的时间，只是临时对策。正确的
-        * 处理逻辑应该是判断子线程是否完成操作。若果没有，加载动画，如果已经
-        * 完成，则继续进行。这部分有时间继续完善！*/
-//        try{
-//            Thread.sleep(3000);}catch (Exception e){e.printStackTrace();
-//        }
-        thread.join();
+        thread.join(); //等待thread线程完成后再进行其他操作
 
-        if (flag) {
-            return true;
-        } else {
-            return false;
-        }
+       return flag;
     }
 
-    /*新线程发起网络请求，已完成*/
-    protected void test()
-    {
-
-
-
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                try{
-//                    OkHttpClient client =new OkHttpClient();
-//                    Request request =new Request.Builder()
-//                            .url("http://dlws.show.0552web.com/androidtest/bbusportUsers.json")
-//                            .build();
-//                    Response response = client.newCall(request).execute();
-//                    String responseData = response.body().string();
-//                    parseJSON(responseData);
-//
-//
-//                }catch (Exception e){
-//                    e.printStackTrace();
-//                }
-//            }
-//        }).start();
-
-    }
 
     /*解析JSON数据，已完成*/
     private void parseJSON(String responseData) {
@@ -386,21 +353,19 @@ public class MainActivity extends AppCompatActivity {
         for (Users users : usersList) {
             if (users.getId().equals(id)) {
                 if (users.getPwd().equals(pwd)) {
-                    flag = true;
+                    flag = 1;
                     usersNow=users;
                     break;
                 } else {
-                    flag = false;
+                    flag = -1;
                     continue;
                 }
 
             } else {
-                flag = false;
+                flag = -1;
                 continue;
             }
         }
     }
-
-
 
 }
