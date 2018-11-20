@@ -1,16 +1,224 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <TextView
-        android:id="@+id/mine_sport_message_tv"
+    <include
+        android:id="@+id/top"
+        layout="@layout/topstyle"
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="200dp"
-        android:background="#F5F5F5"
-        android:gravity="center"
-        android:text="我的运动轨迹" />
+        android:layout_height="wrap_content" />
 
-</RelativeLayout>
+    <RelativeLayout
+        android:id="@+id/relativeLayout1"
+        android:layout_width="fill_parent"
+        android:layout_height="172dp"
+        android:layout_below="@id/top"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp">
+
+        <View
+            android:layout_width="339dp"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rel_tccj"
+            android:layout_centerHorizontal="true"
+            android:background="#000000"></View>
+
+        <View
+            android:layout_width="339dp"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rel_tyxf"
+            android:layout_centerHorizontal="true"
+            android:background="#000000"></View>
+
+
+        <RelativeLayout
+            android:id="@+id/rel_tccj"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/radius_drawable_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/xuexiao" />
+
+            <TextView
+                android:id="@+id/text_sys"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/imageView2"
+                android:text="体测成绩"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_tyxf"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/rel_tccj"
+            android:layout_alignParentLeft="true"
+            android:background="@drawable/radius_drawable_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/xuexiao" />
+
+            <TextView
+                android:id="@+id/text_tyxf"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/imageView"
+                android:text="体育学分"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_hjjl"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_below="@id/rel_tccj"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="50dp"
+            android:background="@drawable/radius_drawable_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/xuexiao" />
+
+            <TextView
+                android:id="@+id/text_hjjl"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/imageView1"
+                android:text="获奖记录"
+                android:textColor="#000" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/relativeLayout2"
+        android:layout_width="match_parent"
+        android:layout_height="130dp"
+        android:layout_below="@id/top"
+        android:layout_alignParentLeft="true"
+        android:layout_marginTop="10dp">
+
+        <View
+            android:layout_width="339dp"
+            android:layout_height="2dp"
+            android:layout_below="@+id/rel_club"
+            android:layout_centerHorizontal="true"
+            android:background="#000000" />
+
+        <RelativeLayout
+            android:id="@+id/rel_club"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/radius_drawable_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/imageView4"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/xuexiao" />
+
+            <TextView
+                android:id="@+id/text_club"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/imageView4"
+                android:text="俱乐部"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/rel_compitition"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:layout_alignParentLeft="true"
+            android:layout_marginLeft="0dp"
+            android:layout_marginTop="66dp"
+            android:background="@drawable/radius_drawable_bg"
+            android:clickable="true">
+
+            <ImageView
+                android:id="@+id/imageView5"
+                android:layout_width="32dp"
+                android:layout_height="match_parent"
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="25dp"
+                android:layout_marginLeft="25dp"
+                android:layout_marginTop="25dp"
+                android:src="@drawable/xuexiao" />
+
+            <TextView
+                android:id="@+id/text_compitition"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="20dp"
+                android:layout_toRightOf="@+id/imageView5"
+                android:text="我的比赛"
+                android:textColor="#000" />
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+
+    <include
+        android:id="@+id/item1"
+        layout="@layout/item1"
+        android:layout_width="match_parent"
+        android:layout_height="70dp" />
+
+
+</LinearLayout>

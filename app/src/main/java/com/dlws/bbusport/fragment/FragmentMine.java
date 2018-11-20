@@ -11,13 +11,22 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 import com.dlws.bbusport.R;
+import com.dlws.bbusport.Users;
+import com.dlws.bbusport.activity.map_page.MapActivity;
+
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.Response;
+
+import static com.dlws.bbusport.MainActivity.usersNow;
 
 /**
  "我的"页面的fragment
  * */
 public class FragmentMine extends android.support.v4.app.Fragment {
 
-    private TextView mSportMessageTv;
+    private TextView nameText;
+    private TextView xuehaoText;
 
     @Nullable
     @Override
@@ -29,15 +38,16 @@ public class FragmentMine extends android.support.v4.app.Fragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
-        mSportMessageTv = (TextView) view.findViewById(R.id.mine_sport_message_tv);
-        mSportMessageTv.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                /*显示所有运动记录的Activity*/
-//                Intent intent = new Intent(getActivity(), ActivitySportList.class);
-//                startActivity(intent);
-            }
-        });
+        nameText=view.findViewById(R.id.name);
+        xuehaoText=view.findViewById(R.id.xuehao);
+
+
+        nameText.setText(usersNow.getName());
+        xuehaoText.setText(usersNow.getId());
+
+
     }
+
+
 
 }

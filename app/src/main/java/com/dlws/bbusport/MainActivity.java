@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     private String id;
     private String pwd;
     static int flag;    //判断账号密码匹配
-    static Users usersNow;      //当前用户
+    public static Users usersNow;      //当前用户
 
     private boolean isHideFirst = true;
 

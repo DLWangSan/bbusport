@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:visibility="gone"
         />
+
     <!--<com.baidu.mapapi.map.MapView-->
     <!--android:id="@+id/bmapView"-->
     <!--android:layout_width="match_parent"-->
@@ -20,6 +21,16 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="@dimen/tab_sport_button_height"
+            android:layout_height="@dimen/tab_sport_button_height"
+            android:layout_gravity="bottom|center"
+
+            android:background="@drawable/bg_tab_sport_button"
+            android:text="停止跑步"
+            android:textSize="20sp"
+            android:textColor="@color/write" />
         <!--<Button-->
             <!--android:id="@+id/run"-->
             <!--android:layout_width="wrap_content"-->

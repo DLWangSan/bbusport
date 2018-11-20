@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="383dp"
+        android:layout_height="116dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="1dp"
+        android:background="@drawable/radius_drawable_bg"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="1dp">
+
+        <ImageView
+            android:id="@+id/touxiang"
+            android:layout_width="65dp"
+            android:layout_height="67dp"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentLeft="true"
+            android:layout_marginStart="25dp"
+            android:layout_marginLeft="25dp"
+            android:layout_marginTop="25dp"
+            android:src="@drawable/touxiang" />
+
+        <TextView
+            android:id="@+id/name"
+            android:layout_width="138dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/touxiang"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="3dp"
+            android:layout_marginEnd="116dp"
+            android:layout_marginRight="116dp"
+            android:text="@string/xingming" />
+
+        <TextView
+            android:id="@+id/xuehao"
+            android:layout_width="213dp"
+            android:layout_height="wrap_content"
+            android:layout_alignTop="@+id/touxiang"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="37dp"
+            android:layout_marginEnd="39dp"
+            android:layout_marginRight="39dp"
+            android:text="@string/xuehao" />
+
+
+    </RelativeLayout>
+
+
+</RelativeLayout>
