@@ -2,7 +2,8 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/yuliang">
 
     <include
         android:id="@+id/top"
@@ -14,35 +15,15 @@
         android:id="@+id/relativeLayout1"
         android:layout_width="fill_parent"
         android:layout_height="172dp"
-        android:layout_below="@id/top"
-        android:layout_alignParentLeft="true"
         android:layout_marginTop="10dp">
-
-        <View
-            android:layout_width="339dp"
-            android:layout_height="2dp"
-            android:layout_below="@+id/rel_tccj"
-            android:layout_centerHorizontal="true"
-            android:background="#000000"></View>
-
-        <View
-            android:layout_width="339dp"
-            android:layout_height="2dp"
-            android:layout_below="@+id/rel_tyxf"
-            android:layout_centerHorizontal="true"
-            android:background="#000000"></View>
-
 
         <RelativeLayout
             android:id="@+id/rel_tccj"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
             android:layout_marginTop="22dp"
-            android:background="@drawable/radius_drawable_bg"
-            android:clickable="true">
+            android:background="@drawable/radius_drawable_bg">
 
             <ImageView
                 android:id="@+id/imageView2"
@@ -51,18 +32,20 @@
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
-                android:src="@drawable/xuexiao" />
+                android:src="@drawable/tice" />
 
             <TextView
-                android:id="@+id/text_sys"
+                android:id="@+id/text_tccj"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
+                android:layout_marginStart="20dp"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/imageView2"
-                android:text="体测成绩"
+                android:layout_toEndOf="@+id/imageView2"
+
+                android:text="@string/ticechengji"
                 android:textColor="#000" />
         </RelativeLayout>
 
@@ -71,20 +54,17 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/rel_tccj"
-            android:layout_alignParentLeft="true"
-            android:background="@drawable/radius_drawable_bg"
-            android:clickable="true">
+            android:background="@drawable/radius_drawable_bg">
 
             <ImageView
                 android:id="@+id/imageView"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/xuexiao" />
+                android:src="@drawable/tiyu" />
 
             <TextView
                 android:id="@+id/text_tyxf"
@@ -92,8 +72,11 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_toRightOf="@+id/imageView"
-                android:text="体育学分"
+                android:layout_toEndOf="@+id/imageView"
+
+                android:text="@string/tiyuxuefen"
                 android:textColor="#000" />
         </RelativeLayout>
 
@@ -102,22 +85,18 @@
             android:layout_width="match_parent"
             android:layout_height="50dp"
             android:layout_below="@id/rel_tccj"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
             android:layout_marginTop="50dp"
-            android:background="@drawable/radius_drawable_bg"
-            android:clickable="true">
+            android:background="@drawable/radius_drawable_bg">
 
             <ImageView
                 android:id="@+id/imageView1"
                 android:layout_width="32dp"
                 android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/xuexiao" />
+                android:src="@drawable/jiangbei" />
 
             <TextView
                 android:id="@+id/text_hjjl"
@@ -125,8 +104,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_toRightOf="@+id/imageView1"
-                android:text="获奖记录"
+                android:layout_toEndOf="@+id/imageView1"
+                android:text="@string/huojiangjilu"
                 android:textColor="#000" />
         </RelativeLayout>
     </RelativeLayout>
@@ -135,8 +116,6 @@
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="130dp"
-        android:layout_below="@id/top"
-        android:layout_alignParentLeft="true"
         android:layout_marginTop="10dp">
 
         <View
@@ -150,55 +129,49 @@
             android:id="@+id/rel_club"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
             android:layout_alignParentTop="true"
-            android:layout_marginLeft="0dp"
             android:layout_marginTop="16dp"
-            android:background="@drawable/radius_drawable_bg"
-            android:clickable="true">
+            android:background="@drawable/radius_drawable_bg">
 
             <ImageView
                 android:id="@+id/imageView4"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
+                android:layout_width="34dp"
+                android:layout_height="26dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/xuexiao" />
+                android:src="@drawable/club" />
 
             <TextView
                 android:id="@+id/text_club"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
+                android:layout_alignBottom="@+id/imageView4"
                 android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_toRightOf="@+id/imageView4"
-                android:text="俱乐部"
+                android:layout_toEndOf="@+id/imageView4"
+                android:text="@string/club"
                 android:textColor="#000" />
         </RelativeLayout>
 
         <RelativeLayout
-            android:id="@+id/rel_compitition"
+            android:id="@+id/rel_competition"
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
             android:layout_marginTop="66dp"
-            android:background="@drawable/radius_drawable_bg"
-            android:clickable="true">
+            android:background="@drawable/radius_drawable_bg">
 
             <ImageView
                 android:id="@+id/imageView5"
-                android:layout_width="32dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentLeft="true"
+                android:layout_width="33dp"
+                android:layout_height="37dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
                 android:layout_marginTop="25dp"
-                android:src="@drawable/xuexiao" />
+                android:src="@drawable/bisai" />
 
             <TextView
                 android:id="@+id/text_compitition"
@@ -206,8 +179,10 @@
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_toRightOf="@+id/imageView5"
-                android:text="我的比赛"
+                android:layout_toEndOf="@+id/imageView5"
+                android:text="@string/wodebisai"
                 android:textColor="#000" />
         </RelativeLayout>
 
@@ -215,10 +190,9 @@
 
 
     <include
-        android:id="@+id/item1"
         layout="@layout/item1"
         android:layout_width="match_parent"
-        android:layout_height="70dp" />
+        android:layout_height="51dp" />
 
 
 </LinearLayout>

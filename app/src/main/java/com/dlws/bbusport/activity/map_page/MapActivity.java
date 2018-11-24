@@ -1,10 +1,17 @@
 package com.dlws.bbusport.activity.map_page;
 
+import android.location.Location;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
+import com.amap.api.location.AMapLocation;
+import com.amap.api.location.AMapLocationClient;
+import com.amap.api.location.AMapLocationClientOption;
+import com.amap.api.location.AMapLocationListener;
 import com.amap.api.maps.model.BitmapDescriptorFactory;
 import com.amap.api.maps.model.LatLng;
+import com.amap.api.maps.model.Marker;
+import com.amap.api.maps.model.MarkerOptions;
 import com.amap.api.maps.model.Polygon;
 import com.amap.api.maps.model.PolygonOptions;
 import com.amap.api.maps.model.Polyline;
@@ -33,16 +40,73 @@ import com.amap.api.trace.LBSTraceClient;
 
 import org.zackratos.ultimatebar.UltimateBar;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
-public class MapActivity extends AppCompatActivity implements TraceStatusListener {
+public class MapActivity extends AppCompatActivity  {
 
 
     private AMap aMap;
     private MapView mapView;
-    private Button stopButton;
+    private Marker marker;
+
     private Polygon polygon;
+    private Button stopButton;
+
+    //声明定位回调监听器
+    public AMapLocationListener mLocationListener = new AMapLocationListener() {
+        @Override
+        public void onLocationChanged(AMapLocation amapLocation) {
+            if (amapLocation != null) {
+                if (amapLocation.getErrorCode() == 0) {
+//可在其中解析amapLocation获取相应内容。
+                    amapLocation.getLocationType();//获取当前定位结果来源，如网络定位结果，详见定位类型表
+                    amapLocation.getLatitude();//获取纬度
+                    amapLocation.getLongitude();//获取经度
+                    amapLocation.getAccuracy();//获取精度信息
+
+                    amapLocation.getAddress();//地址，如果option中设置isNeedAddress为false，则没有此结果，网络定位结果中会有地址信息，GPS定位不返回地址信息。
+                    amapLocation.getCountry();//国家信息
+                    amapLocation.getProvince();//省信息
+                    amapLocation.getCity();//城市信息
+                    amapLocation.getDistrict();//城区信息
+                    amapLocation.getStreet();//街道信息
+                    amapLocation.getStreetNum();//街道门牌号信息
+                    amapLocation.getCityCode();//城市编码
+                    amapLocation.getAdCode();//地区编码
+                    amapLocation.getAoiName();//获取当前定位点的AOI信息
+                    amapLocation.getBuildingId();//获取当前室内定位的建筑物Id
+                    amapLocation.getFloor();//获取当前室内定位的楼层
+                    amapLocation.getGpsAccuracyStatus();//获取GPS的当前状态
+//获取定位时间
+                    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                    Date date = new Date(amapLocation.getTime());
+                    df.format(date);
+
+
+
+                } else {
+                    //定位失败时，可通过ErrCode（错误码）信息来确定失败的原因，errInfo是错误信息，详见错误码表。
+                    Log.e("AmapError", "location Error, ErrCode:"
+                            + amapLocation.getErrorCode() + ", errInfo:"
+                            + amapLocation.getErrorInfo());
+                }
+//                onMapClick(amapLocation.getAltitude(),amapLocation.getLatitude());
+            }
+
+        }
+    };
+//    public void onMapClick(LatLng arg0) {
+//        if (marker != null) {
+//            marker.remove();
+//        }
+//        marker = aMap.addMarker(new MarkerOptions().position(arg0));
+//        boolean b1 = polygon.contains(arg0);
+//        Toast.makeText(MapActivity.this, "是否在围栏里面：" + b1, Toast.LENGTH_SHORT).show();
+//
+//    }
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -69,20 +133,10 @@ public class MapActivity extends AppCompatActivity implements TraceStatusListene
             aMap.getUiSettings().setZoomControlsEnabled(false);
         }
 
-//        //记录轨迹
-//        runButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                LBSTraceClient lbsTraceClient = LBSTraceClient.getInstance(getBaseContext());
-//            }
-//        });
+//        marker = aMap.addMarker(new MarkerOptions().position());
+//        boolean b1 = polygon.contains(arg0);
+//        Toast.makeText(MapActivity.this, "是否在围栏里面：" + b1, Toast.LENGTH_SHORT).show();
 
-//        stopButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                stopTrace();
-//            }
-//        });
 
 
         List<String> permissionList = new ArrayList<>();
@@ -181,10 +235,7 @@ public class MapActivity extends AppCompatActivity implements TraceStatusListene
     }
 
 
-    @Override
-    public void onTraceStatus(List<TraceLocation> list, List<LatLng> list1, String s) {
 
-    }
 
     private void setUpMap() {
 //        aMap.setOnMapClickListener(this);
@@ -216,4 +267,5 @@ public class MapActivity extends AppCompatActivity implements TraceStatusListene
 
 //
     }
+
 }

@@ -8,35 +8,31 @@
         android:layout_height="match_parent">
 
         <RelativeLayout
-            android:id="@+id/relativeLayout"
+            android:id="@+id/rel_shezhi"
             android:layout_width="fill_parent"
             android:layout_height="50dp"
-            android:layout_alignParentLeft="true"
-            android:layout_marginLeft="0dp"
             android:layout_marginTop="10dp"
-            android:background="@drawable/radius_drawable_bg"
-            android:clickable="true">
+            android:background="@drawable/radius_drawable_bg">
 
             <ImageView
                 android:id="@+id/imageView1"
-                android:layout_width="32dp"
-                android:layout_height="40dp"
-                android:layout_alignParentLeft="true"
+                android:layout_width="27dp"
+                android:layout_height="39dp"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
                 android:layout_marginLeft="25dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/xuexiao" />
+                android:src="@drawable/shezhi" />
 
             <TextView
                 android:id="@+id/text_pyq"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
-                android:layout_marginLeft="22dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginStart="20dp"
                 android:layout_toRightOf="@+id/imageView1"
-
-                android:text="设置"
+                android:layout_toEndOf="@+id/imageView1"
+                android:text="@string/shezhi"
                 android:textColor="#000" />
 
         </RelativeLayout>

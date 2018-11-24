@@ -7,6 +7,14 @@
     <string name="xingming">姓名</string>
     <string name="xuehao">学号</string>
 
+
+    <string name="ticechengji">体测成绩</string>
+    <string name="tiyuxuefen">体育学分</string>
+    <string name="huojiangjilu">获奖记录</string>
+    <string name="club">俱乐部</string>
+    <string name="wodebisai">我的比赛</string>
+    <string name="shezhi">设置</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
