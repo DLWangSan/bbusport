@@ -43,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText idEditText;
     private EditText pwdEditText;
     private CheckBox remPwdCheckBox;
+    private CheckBox autoLoginBox;
 
     private View progress;
     private View mInputLayout;
@@ -54,6 +55,7 @@ public class MainActivity extends AppCompatActivity {
     public static Users usersNow;      //当前用户
 
     private boolean isHideFirst = true;
+    private boolean autoLogin = false;
 
 
     @Override
@@ -61,6 +63,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        /*读取autoLogin中flag
+        * T：设选中，登录
+        * F：设不选*/
+        readAutoLoginFlag();
         //状态栏透明
         UltimateBar ultimateBar = new UltimateBar(this);
         ultimateBar.setImmersionBar();
@@ -70,15 +76,36 @@ public class MainActivity extends AppCompatActivity {
         loadPwd();
         //密码可见
         pwdVisible();
+
+        if (autoLogin) {
+//            Toast.makeText(this, "1", Toast.LENGTH_SHORT).show();
+            remembPwd();
+            loadActions();
+            login();
+        }
+
         //登录按钮点击事件
         loginButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                    if(autoLoginBox.isChecked()){
+                        autoL();
+                    }else {
+                        noAutoL();
+                    }
+
                 remembPwd();
                 loadActions();
                 login();
             }
         });
+
+    }
+
+    private void readAutoLoginFlag() {
+        SharedPreferences sPreferences=getSharedPreferences("autoLogin", MODE_PRIVATE);
+        autoLogin=sPreferences.getBoolean("flag",true);
 
     }
 
@@ -192,6 +219,12 @@ public class MainActivity extends AppCompatActivity {
         remPwdCheckBox=findViewById(R.id.remembPwd);
         progress = findViewById(R.id.layout_progress);
         mInputLayout = findViewById(R.id.input_layout);
+        autoLoginBox=findViewById(R.id.automaticlogon);
+        if (autoLogin) {
+            autoLoginBox.setChecked(true);
+        }else{
+            autoLoginBox.setChecked(false);
+        }
 
 
     }
@@ -312,6 +345,25 @@ public class MainActivity extends AppCompatActivity {
     private void deletePwd(){
         SharedPreferences.Editor editor = getSharedPreferences("users", MODE_PRIVATE).edit();
         editor.clear();
+        editor.apply();
+    }
+
+    /*勾选自动登录跳转的方法
+     * 实际操作为通过SharedPreferences
+     * 将登录状态保存到autoLogin文件中
+     * 已完成*/
+    private void autoL(){
+        SharedPreferences.Editor editor = getSharedPreferences("autoLogin", MODE_PRIVATE).edit();
+        editor.putBoolean("flag", true);
+        editor.apply();
+    }
+    /*不勾选自动登录跳转的方法
+     * 实际操作为通过SharedPreferences
+     * 将登录状态保存到autoLogin文件中
+     * 已完成*/
+    private void noAutoL(){
+        SharedPreferences.Editor editor = getSharedPreferences("autoLogin", MODE_PRIVATE).edit();
+        editor.putBoolean("flag", false);
         editor.apply();
     }
 

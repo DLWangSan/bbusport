@@ -194,5 +194,23 @@
         android:layout_width="match_parent"
         android:layout_height="51dp" />
 
+    <RelativeLayout
+        android:id="@+id/tuichu"
+        android:layout_width="330dp"
+        android:layout_height="45dp"
+        android:layout_gravity="center"
+        android:layout_marginTop="22dp"
+        android:background="@drawable/radius_drawable_bg2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="退出登录"
+            android:textColor="#ffffff"
+            android:layout_centerInParent="true"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
 
 </LinearLayout>
